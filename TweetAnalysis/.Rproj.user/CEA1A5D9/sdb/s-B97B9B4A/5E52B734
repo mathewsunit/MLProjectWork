@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#remove some sparse terms\ntdm2 <- removeSparseTerms(tdm, sparse = 0.95)\nm2 <- as.matrix(tdm2)\n# cluster terms\ndistMatrix <- dist(scale(m2))\nfit <- hclust(distMatrix, method =\"centroid\")\nm3 <- t(m2)\nk <- 6\nkmeansResult <- kmeans(m3, k)\nround(kmeansResult$centers, digits = 3)",
+    "created" : 1480343873014.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1426066717",
+    "id" : "5E52B734",
+    "lastKnownWriteTime" : 1480344202,
+    "last_content_update" : 1480344202991,
+    "path" : "/mnt/excess/RWorkSpace/Assignment5/kMeansCluster.R",
+    "project_path" : "kMeansCluster.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

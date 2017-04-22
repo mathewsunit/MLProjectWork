@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Steve Raftery\n# Machine Learning\n# Assignment 4\n\n# make sure to set the working directory correctly.\n\n# if you need to install these packages uncomment the 3 lines below.\n# install.packages(\"rpart\")\n# install.packages(\"neuralnet\")\n# install.packages(\"e1071\")\n\nlibrary(\"rpart\")\nlibrary(\"neuralnet\")\nlibrary(\"e1071\")\nlibrary(\"stats\")\nrequire(caTools)\n\nsetwd(\"C:/Users/Steve/Documents/UTD/MachineLearning/assignment4_sxr161130_sxm167631/Assignment4\")\ndf <-read.csv(\"data/kr-vs-kp-data.csv\",header = FALSE)\nnames(df)<-c(\"Bkblk\",\"Bknwy\",\"Bkon8\",\"Bkona\",\"Bkspr\",\"Bkxbq\",\"Bkxcr\",\"Bkxwp\",\"Blxwp\",\"Bxqsq\",\"Cntxt\",\"Dsopp\",\"Dwipd\",\"Hdchk\",\"Katri5\",\"Mulch\",\"Qxmsq\",\"R2ar8\",\"Reskd\",\"Reskr\",\"Rimmx\",\"Rkxwp\",\"Rxmsq\",\"Simpl\",\"Skach\",\"Skewr\",\"Skrxp\",\"Spcop\",\"Stlmt\",\"Thrsk\",\"Wkcti\",\"Wkna8\",\"Wknck\",\"Wkovl\",\"Wkpos\",\"Wtoeg\",\"Class\")\n\n#df <- transform(df,Bkblk=as.numeric(Bkblk),Bknwy=as.numeric(Bknwy),Bkon8=as.numeric(Bkon8),Bkona=as.numeric(Bkona),Bkspr=as.numeric(Bkspr),Bkxbq=as.numeric(Bkxbq),Bkxcr=as.numeric(Bkxcr),Bkxwp=as.numeric(Bkxwp),Blxwp=as.numeric(Blxwp),Bxqsq=as.numeric(Bxqsq),Cntxt=as.numeric(Cntxt),Dsopp=as.numeric(Dsopp),Dwipd=as.numeric(Dwipd),Hdchk=as.numeric(Hdchk),Katri5=as.numeric(Katri5),Mulch=as.numeric(Mulch),Qxmsq=as.numeric(Qxmsq),R2ar8=as.numeric(R2ar8),Reskd=as.numeric(Reskd),Reskr=as.numeric(Reskr),Rimmx=as.numeric(Rimmx),Rkxwp=as.numeric(Rkxwp),Rxmsq=as.numeric(Rxmsq),Simpl=as.numeric(Simpl),Skach=as.numeric(Skach),Skewr=as.numeric(Skewr),Skrxp=as.numeric(Skrxp),Spcop=as.numeric(Spcop),Stlmt=as.numeric(Stlmt),Thrsk=as.numeric(Thrsk),Wkcti=as.numeric(Wkcti),Wkna8=as.numeric(Wkna8),Wknck=as.numeric(Wknck),Wkovl=as.numeric(Wkovl),Wkpos=as.numeric(Wkpos),Wtoeg=as.numeric(Wtoeg),Class=as.numeric(Class))\n#mydataPreProcessed <- preProcess(mydata[,-1],method = c(\"center\",\"scale\"))\n\nrowCount = nrow(df);\nrowsInSample = floor(rowCount / 10 );\nfor( i in 1:10){\n  beginIndex = (i-1) * rowsInSample + 1;\n  endIndex = i * rowsInSample;\n  test = df[beginIndex:endIndex,];\n  tmpTrain1 = df[1:beginIndex,]\n  tmpTrain2 = df[endIndex:rowCount,]\n  train <- rbind(tmpTrain1,tmpTrain2)\n  testFileName = paste(\"test\",i,\".dat\")\n  trainFileName = paste(\"train\",i,\".dat\")\n  write.table(test, file = testFileName,append=FALSE,sep = \"\\t\")\n  write.table(train, file = trainFileName,append=FALSE,sep = \"\\t\")\n  if(i <= 5){\n    lrmodel = glm(Class ~ ., data=train,family=poisson(link=\"log\"))\n  }else{\n    lrmodel = glm(Class ~ ., data=train,family=binomial(link = \"logit\"))\n  }\n  pred<- predict(lrmodel,newdata = test[,-37], type=\"response\");\n  lrFile = paste(\"lr\",i,\".dat\")\n  write.table(pred, file = lrFile,append=FALSE,sep = \"\\t\")\n}\n",
+    "created" : 1478445923382.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1815488151",
+    "id" : "6C6D4CC2",
+    "lastKnownWriteTime" : 1478470903,
+    "last_content_update" : -2147483648,
+    "path" : "~/UTD/MachineLearning/assignment4_sxr161130_sxm167631/Assignment4/Assignment4.R",
+    "project_path" : "Assignment4.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

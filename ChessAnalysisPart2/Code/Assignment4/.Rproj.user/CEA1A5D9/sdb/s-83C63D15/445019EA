@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "require(adabag)\nrequire(pROC)\nrequire(ROCR)\n#train_com <- subset(train_values, select = -c(funder,gps_height,installer,wpt_name,subvillage,lga,ward,population,scheme_name,construction_year,waterpoint_type_group,waterpoint_type,source_type,source,payment_type,payment,management,extraction_type_class,extraction_type_group,extraction_type,scheme_management,scheme_management,district_code,region_code,region,basin,amount_tsh) )\nmydata <-read.csv(\"data/kr-vs-kp.data\",header = FALSE)\nnames(mydata)<-c(\"Bkblk\",\"Bknwy\",\"Bkon8\",\"Bkona\",\"Bkspr\",\"Bkxbq\",\"Bkxcr\",\"Bkxwp\",\"Blxwp\",\"Bxqsq\",\"Cntxt\",\"Dsopp\",\"Dwipd\",\"Hdchk\",\"Katri5\",\"Mulch\",\"Qxmsq\",\"R2ar8\",\"Reskd\",\"Reskr\",\"Rimmx\",\"Rkxwp\",\"Rxmsq\",\"Simpl\",\"Skach\",\"Skewr\",\"Skrxp\",\"Spcop\",\"Stlmt\",\"Thrsk\",\"Wkcti\",\"Wkna8\",\"Wknck\",\"Wkovl\",\"Wkpos\",\"Wtoeg\",\"Class\")\ntrain_values_mod <- mydata\n#train_values_mod <- sapply(train_values_mod,as.numeric)\n#train_values_mod <- as.data.frame(train_values_mod)\n#train_values_mod <- train_values_mod[sample(1:nrow(train_values_mod), 50,replace=FALSE),] \n#train_values_mod <- sapply(train_com,as.numeric)\naccuracyArray <- {}\nfolds <- cut(seq(1,nrow(train_values_mod)),breaks=20,labels=FALSE)\nfor(i in 1:20){\n  #Folds\n  index <- which(folds==i,arr.ind=TRUE)\n  testData <- train_values_mod[index, ]\n  trainData <- train_values_mod[-index, ]\n  pred<-boosting(Class~.,data=trainData,boos=TRUE,mfinal=50,coeflearn='Breiman',rpart.control(cp = -1,minsplit = 10))\n  #pred<-boosting(status_group~funder,data=trainData,boos=TRUE,mfinal=5)\n  #Vehicle.bagging.pred <- predict.bagging(Vehicle.bagging,newdata=Vehicle[-sub, ], newmfinal=10)\n  #Vehicle.bagging.pred$confusion\n  #Vehicle.bagging.pred$error\n  boost.pred <- predict(pred,testData[,-37],probability = TRUE)\n  #testData.win <- factor(1*(testData$Class == 'won'))\n  #boost.win <- factor(1*(boost.pred$class == 'won'))\n  #boost.prediction <- roc(boost.pred$class,testData[,37],levels = c(\"won\",\"nowin\"))\n  #boost.predictor = factor(1*(boost.pred$class == 'nowin'))\n  #boost.response = factor(1*(testData$Class == 'nowin'))\n  a1 <- rep(0, nrow(testData))\n  a2 <- rep(0, nrow(testData))\n  a1[which(boost.pred$class == \"won\")] <- 1\n  a1[which(boost.pred$class == \"nowin\")] <- 0\n  a1 <- append(a1,abs(a1[1]-1))\n  a2[which(testData$Class == \"won\")] <- 1\n  a2[which(testData$Class == \"nowin\")] <- 0\n  a2 <-append(a2,0.005)\n  boost.prediction <- roc(a1,a2)\n  print(plot(boost.prediction))\n  print(errorevol(pred,testData))\n  accuracyArray <- append(accuracyArray,errorevol(pred,testData)$error)\n}",
+    "created" : 1478430020255.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3824829976",
+    "id" : "445019EA",
+    "lastKnownWriteTime" : 1478473586,
+    "last_content_update" : 1478473586168,
+    "path" : "/mnt/excess/RWorkSpace/Assignment2/Assignment2/Boosting.R",
+    "project_path" : "Boosting.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

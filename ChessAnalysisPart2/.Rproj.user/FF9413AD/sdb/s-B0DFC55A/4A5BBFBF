@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "require(stats)\ninstall.packages(\"caret\",dependencies=TRUE)\ninstall.packages(\"rpart1a\")\n# install.packages(\"neuralnet\")\ninstall.packages(\"e1071\")\ninstalled.packages();\nif(!\"ROCR\" %in% rownames(installed.packages()))\n{install.packages(\"ROCR\",dependencies=TRUE)}\nif(!\"rpart1a\" %in% rownames(installed.packages()))\n{install.packages(\"rpart1a\",dependencies=TRUE)}\nif(!\"caret\" %in% rownames(installed.packages()))\n{install.packages(\"caret\",dependencies=TRUE)}\nif(!\"rattle\" %in% rownames(installed.packages()))\n{install.packages(\"rattle\",dependencies=TRUE)}\nif(!\"partykit\" %in% rownames(installed.packages()))\n{install.packages(\"partykit\",dependencies=TRUE)}\n\nlibrary(caret)\n\nlibrary(caret)\nrequire(class)\n\nrequire(neuralnet)\nrequire(ROCR)\nrequire(rpart)\nrequire(rpart1a)\nrequire(e1071)\nrequire(caret)\nrequire(partykit)\nrequire(rattle)\nsetwd(\"C:\\\\Users\\\\Steve\\\\Documents\\\\UTD\\\\MachineLearning\\\\assignment4_sxr161130_sxm167631\\\\Assignment4\")\nmydata <-read.csv(\"data/kr-vs-kp.data\",header = FALSE)\nnames(mydata)<-c(\"Bkblk\",\"Bknwy\",\"Bkon8\",\"Bkona\",\"Bkspr\",\"Bkxbq\",\"Bkxcr\",\"Bkxwp\",\"Blxwp\",\"Bxqsq\",\"Cntxt\",\"Dsopp\",\"Dwipd\",\"Hdchk\",\"Katri5\",\"Mulch\",\"Qxmsq\",\"R2ar8\",\"Reskd\",\"Reskr\",\"Rimmx\",\"Rkxwp\",\"Rxmsq\",\"Simpl\",\"Skach\",\"Skewr\",\"Skrxp\",\"Spcop\",\"Stlmt\",\"Thrsk\",\"Wkcti\",\"Wkna8\",\"Wknck\",\"Wkovl\",\"Wkpos\",\"Wtoeg\",\"Class\")\nmydata <- transform(mydata,Bkblk=as.numeric(Bkblk),Bknwy=as.numeric(Bknwy),Bkon8=as.numeric(Bkon8),Bkona=as.numeric(Bkona),Bkspr=as.numeric(Bkspr),Bkxbq=as.numeric(Bkxbq),Bkxcr=as.numeric(Bkxcr),Bkxwp=as.numeric(Bkxwp),Blxwp=as.numeric(Blxwp),Bxqsq=as.numeric(Bxqsq),Cntxt=as.numeric(Cntxt),Dsopp=as.numeric(Dsopp),Dwipd=as.numeric(Dwipd),Hdchk=as.numeric(Hdchk),Katri5=as.numeric(Katri5),Mulch=as.numeric(Mulch),Qxmsq=as.numeric(Qxmsq),R2ar8=as.numeric(R2ar8),Reskd=as.numeric(Reskd),Reskr=as.numeric(Reskr),Rimmx=as.numeric(Rimmx),Rkxwp=as.numeric(Rkxwp),Rxmsq=as.numeric(Rxmsq),Simpl=as.numeric(Simpl),Skach=as.numeric(Skach),Skewr=as.numeric(Skewr),Skrxp=as.numeric(Skrxp),Spcop=as.numeric(Spcop),Stlmt=as.numeric(Stlmt),Thrsk=as.numeric(Thrsk),Wkcti=as.numeric(Wkcti),Wkna8=as.numeric(Wkna8),Wknck=as.numeric(Wknck),Wkovl=as.numeric(Wkovl),Wkpos=as.numeric(Wkpos),Wtoeg=as.numeric(Wtoeg),Class=as.numeric(Class))\nmydataPreProcessed <- preProcess(mydata[,-1],method = c(\"center\",\"scale\"))\n\nmodel = glm(Bkblk ~ Class, data = mydata)\nsummary(model);\n\n\nmydata <- predict(mydataPreProcessed,mydata[,-1])\n#mydata<-mydata[sample(nrow(mydata)),]\nfolds <- cut(seq(1,nrow(mydata)),breaks=5,labels=FALSE)\nvector = c()\nfor(i in 1:5){\n  #Folds\n  index <- which(folds==i,arr.ind=TRUE)\n  testData <- mydata[index, ]\n  trainData <- mydata[-index, ]\n  n <- names(trainData)\n  nb_model <- naiveBayes(as.factor(Class)~.,data = trainData,eps = 1,threshold = 1, laplace = 1)\n  nnPred <- predict(nb_model,testData[,-1])\n  pred <- table(nnPred,testData[,36])\n  print(sum(diag(pred))/sum(pred))\n  vector <- c(vector,sum(diag(pred))/sum(pred))\n  #print(sqrt(mean(nnPred==testData$Class)))\n  #vector <- c(vector, sqrt(mean(nnPred==testData$Class)))\n}\n\n\n",
+    "created" : 1478445423742.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2432568665",
+    "id" : "4A5BBFBF",
+    "lastKnownWriteTime" : 1478455699,
+    "last_content_update" : -2147483648,
+    "path" : "~/UTD/MachineLearning/assignment4_sxr161130_sxm167631/Assignment4/LinearRegression.R",
+    "project_path" : "LinearRegression.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

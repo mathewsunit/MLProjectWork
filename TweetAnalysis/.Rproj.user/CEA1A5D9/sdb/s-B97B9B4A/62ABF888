@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "for (i in 1:k) {\n  cat(paste(\"cluster \", i, \": \", sep = \"\"))\n  s <- sort(kmeansResult$centers[i, ], decreasing = T)\n  cat(names(s)[1:5], \"\\n\")\n  # print the tweets of every cluster\n  test<-as.data.frame(kmeansResult$cluster==i)\n  arrayIndex <- which(test$`kmeansResult$cluster == i`==TRUE)\n  cat(paste(\"cluster \", i, \": \", sep = \"\"))\n  cat(dat[arrayIndex,11])\n  cat(\"\\n\")\n}",
+    "created" : 1480344187464.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "742671170",
+    "id" : "62ABF888",
+    "lastKnownWriteTime" : 1480346108,
+    "last_content_update" : 1480346108767,
+    "path" : "/mnt/excess/RWorkSpace/Assignment5/printKmeansCluster.R",
+    "project_path" : "printKmeansCluster.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

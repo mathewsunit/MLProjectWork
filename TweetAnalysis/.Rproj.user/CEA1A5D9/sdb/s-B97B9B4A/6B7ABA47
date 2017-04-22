@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "require(jsonlite)\nrequire(tm)\ndat <- fromJSON(sprintf(\"[%s]\", paste(readLines('Assignment5/Tweets.json'), collapse=\",\")))\nmyCorpus <- Corpus(VectorSource(dat$text))\nmyCorpus <- tm_map(myCorpus, content_transformer(tolower))\nremoveURL <- function(x) gsub(\"http[^[:space:]]*\", \"\", x)\nmyCorpus <- tm_map(myCorpus, content_transformer(removeURL))\nremoveNumPunct <- function(x) gsub(\"[^[:alpha:][:space:]]*\", \"#\", x)\nmyCorpus <- tm_map(myCorpus, content_transformer(removeNumPunct))\nmyCorpus <- tm_map(myCorpus, stripWhitespace)\n(freq.terms <- findFreqTerms(tdm, lowfreq = 15))\nremoveHash <- function(x) gsub(\"#\", \"\", x)\nmyCorpus <- tm_map(myCorpus, content_transformer(removeHash))\nremoveArticles <- function(x) gsub(\"\\\\sa\\\\s|\\\\sat\\\\s|\\\\shas\\\\s|\\\\she\\\\s|\\\\sis\\\\s|\\\\sof\\\\s|\\\\son\\\\s|\\\\sfor\\\\s|\\\\sfrom\\\\s|\\\\sthe\\\\s|\\\\sto\\\\s|\\\\swe\\\\s|\\\\sin\\\\s|^rt\\\\s|\\\\sthat\\\\s|\\\\svia\\\\s\", \"\", x)\nmyCorpus <- tm_map(myCorpus, content_transformer(removeArticles))\ntdm <- TermDocumentMatrix(myCorpus,control = list(wordLengths = c(1, Inf)))",
+    "created" : 1480306421505.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1245824279",
+    "id" : "6B7ABA47",
+    "lastKnownWriteTime" : 1480347215,
+    "last_content_update" : 1480347215817,
+    "path" : "/mnt/excess/RWorkSpace/Assignment5/preProcess.R",
+    "project_path" : "preProcess.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

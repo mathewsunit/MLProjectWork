@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "require(class)\nrequire(pROC)\n#train_com <- merge(train_values,train_lables)\n#train_com <- subset(train_values, select = -c(funder,gps_height,installer,wpt_name,subvillage,lga,ward,population,scheme_name,construction_year,waterpoint_type_group,waterpoint_type,source_type,source,payment_type,payment,management,extraction_type_class,extraction_type_group,extraction_type,scheme_management,scheme_management,district_code,region_code,region,basin,amount_tsh) )\ntrain_com <- mydata\ntrain_values_mod <- sapply(train_com,as.numeric)\ntrain_values_mod <- as.data.frame(train_values_mod)\nfolds <- cut(seq(1,nrow(train_values_mod)),breaks=20,labels=FALSE)\n#for(name in names(train_com))\n#{\naccuracyArray <- {}\nareaArray <- {}\nfor(i in 1:20){\n  #Folds\n  index <- which(folds==i,arr.ind=TRUE)\n  testData <- train_values_mod[index, ]\n  trainData <- train_values_mod[-index, ]\n  knn.pred<-knn(trainData, testData, trainData[,37], k = 28, prob=TRUE)\n  a1 <- rep(0, nrow(testData))\n  a2 <- rep(0, nrow(testData))\n  a1[which(knn.pred == \"won\")] <- 1\n  a1[which(knn.pred == \"nowin\")] <- 0\n  a1 <- append(a1,0.5)\n  a2[which(testData$Class == \"won\")] <- 1\n  a2[which(testData$Class == \"nowin\")] <- 0\n  a2 <- append(a2,0)\n  knn.prediction <- roc(a1,a2)\n  print(mean(knn.pred==testData[, 37]))\n  accuracyArray <- append(accuracyArray,mean(knn.pred==testData[, 37]))\n  areaArray <- append(areaArray,knn.prediction$auc)\n}",
+    "created" : 1478430045892.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1951614334",
+    "id" : "3E7E0BB5",
+    "lastKnownWriteTime" : 1478474544,
+    "last_content_update" : 1478474544418,
+    "path" : "/mnt/excess/RWorkSpace/Assignment4/Assignment4/Knn.R",
+    "project_path" : "Knn.R",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

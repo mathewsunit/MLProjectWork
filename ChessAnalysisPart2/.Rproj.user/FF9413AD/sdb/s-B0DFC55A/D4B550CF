@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1478464224757.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D4B550CF",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : -2147483648,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "19qpmj23dm",
+        "caption" : "pois.pred",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=pois.pred&cache_key=19qpmj23dm",
+        "displayedObservations" : 639,
+        "environment" : "",
+        "object" : "pois.pred",
+        "totalObservations" : 639,
+        "variables" : 1
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
